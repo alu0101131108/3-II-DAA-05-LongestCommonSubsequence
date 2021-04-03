@@ -13,10 +13,10 @@ int main(int argc, char *argv[])
   else 
   {
     LCS lcs(argv[1], argv[2]);
-    std::vector<std::string> LCSs = lcs.getLCSs();
-    for (int i = 0; i < LCSs.size(); i++)
+    std::unordered_set<std::string> LCSs = lcs.getLCSs();
+    for (const auto &lcs : LCSs)
     {
-      std::cout << LCSs[i] << std::endl;
+      std::cout << lcs << std::endl;
     }
   }
   return 0;

@@ -12,14 +12,14 @@ private:
   Table table_;
   std::string stringA_;
   std::string stringB_;
-  std::vector<std::string> LCSs_;
+  std::unordered_set<std::string> LCSs_;
   void buildTables();
-  std::vector<std::string> backtrack(int i, int j);
+  std::unordered_set<std::string> backtrack(int i, int j);
 
 public:
   LCS();
   LCS(std::string stringA, std::string stringB);
-  std::vector<std::string> getLCSs();
+  std::unordered_set<std::string> getLCSs();
   void resetFor(std::string stringA, std::string stringB);
   void printTable();
   ~LCS();

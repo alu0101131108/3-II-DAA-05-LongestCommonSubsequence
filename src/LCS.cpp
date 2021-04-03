@@ -29,7 +29,7 @@ void LCS::buildTables()
   }
 }
 
-std::vector<std::string> LCS::backtrack(int i, int j) 
+std::unordered_set<std::string> LCS::backtrack(int i, int j)
 {
   std::unordered_set<std::string> LCSs;
   if (i == 0 || j == 0)
@@ -38,32 +38,29 @@ std::vector<std::string> LCS::backtrack(int i, int j)
   }
   else if (stringA_[i - 1] == stringB_[j - 1])
   {
-    std::vector<std::string> subLCSs = backtrack(i - 1, j - 1);
-    for (int k = 0; k < subLCSs.size(); k++)
+    std::unordered_set<std::string> subLCSs = backtrack(i - 1, j - 1);
+    for (const auto &subLCS : subLCSs)
     {
-      LCSs.insert(subLCSs[k] + stringA_[i - 1]);
+      LCSs.insert(subLCS + stringA_[i - 1]);
     }
   }
   else
   {
-    std::vector<std::string> subLCSsVec;
     if (table_.get(i, j - 1) >= table_.get(i - 1, j))
     {
-      subLCSsVec = backtrack(i, j - 1);
-      std::unordered_set<std::string> subLCSsA(subLCSsVec.begin(), subLCSsVec.end());
+      std::unordered_set<std::string> subLCSsA = backtrack(i, j - 1);
       LCSs.insert(subLCSsA.begin(), subLCSsA.end());
     }
     if (table_.get(i - 1, j) >= table_.get(i, j - 1))
     {
-      subLCSsVec = backtrack(i - 1, j);
-      std::unordered_set<std::string> subLCSsB(subLCSsVec.begin(), subLCSsVec.end());
+      std::unordered_set<std::string> subLCSsB = backtrack(i - 1, j);
       LCSs.insert(subLCSsB.begin(), subLCSsB.end());
     }
   }
-  return std::vector<std::string>(LCSs.begin(), LCSs.end()); 
+  return LCSs; 
 }
 
-std::vector<std::string> LCS::getLCSs() 
+std::unordered_set<std::string> LCS::getLCSs()
 {
   return LCSs_;
 }
