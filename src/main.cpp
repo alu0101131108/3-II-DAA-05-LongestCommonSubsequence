@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
       }
       wordsLeft--;
     }
+    std::cout << "LCSs size: " << (*LCSs.begin()).size() << std::endl;
     for (const auto &lcs : LCSs)
     {
       std::cout << lcs << std::endl;
